@@ -1,0 +1,1 @@
+This namespace is dedicated to updating existing Spack packages to newer versions or fixing dependencies/errors/problems. If the package already exists within Spack, it probably belongs in this directory.
