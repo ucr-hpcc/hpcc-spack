@@ -19,7 +19,8 @@ class Cgmaptools(Package):
     depends_on("cxx", type="build")
 
     depends_on("python", type="run")
-    depends_on("R", type="run")
+    depends_on("r", type="run")
+    depends_on("perl", type="run")
 
     def install(self, spec, prefix):
         bash = which("bash")
