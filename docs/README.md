@@ -3,7 +3,6 @@
     - concretizer.yaml
     - toolchains.yaml
 - Mention commands
-    - spack repo ls
     - spack location
     - spack cd
 - Users configuring upstreams
@@ -128,13 +127,12 @@ spack repo update
 From here, every time you want to develop a spack package, just be sure to source the `setup-env.sh` file located at `${SPACK_PATH}/spack/share/spack/setup-env.sh`
 
 
-
-
-# TODO: Finish below
+### Creating A Package
 
 Whether you just need to update a version (and don't want to go through the multi-day/week process of getting it merged into the spack-packages repo) or want to add new software, you can create new spack packages in the "hpcc" namespace repo. You can find the location of the repos by using the `spack repo ls` command. **Please dont modify the builtin repo.** The builtin repo should be what Spack provides, any updates to existing packages should be copied to the hpcc_updates repo.
 
 Creation of the initial `package.py` file can be made using the `spack create` command. For example, if the file originates on GitHub, you can copy the download from the release and use `spack create -N hpcc_pkgs https://github.com/EXAMPLE/PKG/archive/refs/tags/v9.9.9.tar.gz`. Including `-N hpcc_pkgs` is important to make sure that it's created under the hpcc_pkgs namespace, rather than builtin or hpcc_updates. This command should also grab multiple releases. I typically just grab the latest version though.
+
 
 ### Good Example Packages
 
@@ -150,38 +148,25 @@ Creation of the initial `package.py` file can be made using the `spack create` c
 Spack should ease the herculean task of installing hundreds of pieces of software by hand. The module-logging system should give an idea on how popular software is, and *most* are available through Spack. When reinstalling, aim to just install the latest version of the packages and not worry about maintaining older versions. The exception to this would probably be for CUDA (11.8 needed for K80s) and compilers, where different versions offer flexibility for users. If a user requests an older version, then install it.
 
 
-### Compilers
+### Configuration
 
-Before attempting to install, make sure the `packages.yaml` file **does not** have
-```yaml
-packages:
-  gcc:
-    require:
-    - one_of: [.....]
-```
-
-With no outside compilers installed, this will attempt to prioritize versions of gcc that doesn't exist. If `packages.yaml` includes this, remove it and be prepared to readd it later.
-
-Attempt to install compilers first, these being:
-```
-gcc@12+binutils
-gcc@14+binutils		# Some example GCC versions to install
-intel-oneapi-compilers
-llvm
-```
-**Note** the +binutils variant. Newer versions of gcc need to be compiled with binutils. This constraint *should* be automatically handled by Spack, but the `os=rhel` constraint doesn't seem to apply for Rocky, so manually add it. 
-
-Once all compilers are installed, the `packages.yaml` file can be configured to include
+Before attempting to install, make sure the `packages.yaml` file has the correct compiler versions. At the time of writing, Rocky 8 provides GCC 8, and we also want to install GCC 12 and 14. In this case, the `packages.yaml` file should look like:
 ```yaml
 packages:
   gcc:
     require:
     - one_of: ["@8", "@12", "@14"]
 ```
+This will prioritize using GCC 8, then 12, then 14.
+
+### Package Installation
+
+Using the module system, you'll need to figure out all of the packages that need to be installed. Installing hundreds of packages at once should be possible, though throwing them all it might also lead to errors due to problematic packages. The first thing would be to generate a spec of all of the software (eg. `spack spec PKG1 PKG2 PKG3 .... PKGN`). You might need to use `--deprecated`, as some software might depend only on deprecated software. This might take some time (>10 minutes) to generate. If there are problematic packages, remove them to handle manually later. After that, running a `spack install PKG1 PKG2 PKG3 ... PKGN` should work to install all software.
 
 
-### User Packages
 
-#TODO: Update, the below is wrong
-Attempting to install multiple packages in a single spec is generally discouraged, as it will attempt to reuse as many packages as possible. This can make it harder to install certain packages and sometimes conflict with versions.
+## User Usage of Spack
+
+We also provide Spack to our users. This is beneficial for situations where users want/need specific versions, want special compiler options, or want to build more optimized builds.
+#TODO: Finish
 
