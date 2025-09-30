@@ -15,10 +15,13 @@ Currently, Spack is installed in `/opt/linux/rocky/8.x/x86_64/`. Most/all paths 
 
 Some config files of special importance are `config.yaml`, `repos.yaml`, and `packages.yaml`. 
 
+### config.yaml
 `config.yaml` is currently configured to store installed packages within a `${os}/{name}/{version}-{hash}` folder structure. The default structure is fairly verbose and supports multiple architectures, though we want our installed software to be universally runnable. This file also configures the build of the software to occur in the scratch directory. This will prevent it from building in the default locations of `/tmp` or the home directory. Note that two colons are included for `build_stage`, as a single colon would append to the default list rather than override it.
 
+### repos.yaml
 `repos.yaml` configures where Spack searches for packages. We have an `hpcc` repo that is used for new packages or updates to packages. There is also Spack's built in repo. If there are updates to the repos, they can be pulled using `spack repo update` which will pull the latest updates from both repos.
 
+### packages.yaml
 `packages.yaml` configures how Spack installs packages. With `packages:all:target:` we explicitly target the `x86_64_v2` architecture. This is to accomidate the older batch and highmem nodes. If/when these are removed, the target can be increased to `x86_64_v3`. `packages:all:require:` configures spack to use GCC as the compiler when C, C++, or Fortran are required by the package. This is complemented by `packages:gcc:` to set the version preference. As of the time of writing, it's set to `["@8", "@12", "@14"]`, which will first use GCC 8 (the OS-provided version) followed by GCC 12, then GCC 14 (both need to be manually installed). `packages:all:providers:` specified which packages can provide certain features. Here we only have MPI, which can be satisfied by OpenMPI, MPICH, or Intel's OneAPI. There is `packages:all:variants:` which will attempt to build all packages as "RelWithDebInfo". This might result in larger binaries, but should hopefully allow us (and maybe the users) an easier time debugging programs if there are problems. Finally there is package-specific configuration. As of the time of writing, LLVM, openmpi, mpich, slurm, and opengl are the only manually configured packages. For LLVM, it's build with `build_type=Release`, as there were problems compiling it with debug. OpenMPI and MPICH are both build with support for Slurm, so we shouldn't need to worry about specifying that variant manually. Slurm and OpenGL are both system-provided packages, but are made visible to Spack if they're required by other packages.
 
 
