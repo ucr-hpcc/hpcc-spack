@@ -101,20 +101,47 @@ With this, we can see that gcc and glibc are provided externally `[e]`, and ever
 
 
 
-# TODO: Finish below
-
-
 ## Package Creation
 
-Whether you just need to update a version (and don't want to go through the multi-day/week process of getting it merged into the spack-packages repo) or want to add new software, you can create new spack packages in the "hpcc" namespace repo at `$HPCC_MODULES/../spack/repo/`
-#TODO
+### Environment Setup
+
+Rather than doing everything from the pkgadmin account, it's encouraged to get the install working on your local user first, then push an update to the git repo, update the repo through the pkgadmin account, then install it through pkgadmin. This can/will reduce the number of half-installed packages.
+
+To get an environment set up for development, I do the following:
+```console
+SPACK_PATH="${HOME}/bigdata/spack_dev"
+mkdir -p ${SPACK_PATH}
+cd ${SPACK_PATH}
+git clone https://github.com/spack/spack.git
+source ${SPACK_PATH}/spack/share/spack/setup-env.sh
+cat > ${SPACK_PATH}/spack/etc/spack/repos.yaml << EOF
+repos:
+  hpcc:
+    git: git@github.com:ucr-hpcc/hpcc-spack.git
+    destination: ${SPACK_PATH}/repos/hpcc-spack
+  builtin:
+    destination: ${SPACK_PATH}/repos/spack-packages
+EOF
+spack repo update
+```
+
+From here, every time you want to develop a spack package, just be sure to source the `setup-env.sh` file located at `${SPACK_PATH}/spack/share/spack/setup-env.sh`
+
+
+
+
+# TODO: Finish below
+
+Whether you just need to update a version (and don't want to go through the multi-day/week process of getting it merged into the spack-packages repo) or want to add new software, you can create new spack packages in the "hpcc" namespace repo. You can find the location of the repos by using the `spack repo ls` command. **Please dont modify the builtin repo.** The builtin repo should be what Spack provides, any updates to existing packages should be copied to the hpcc_updates repo.
+
+Creation of the initial `package.py` file can be made using the `spack create` command. For example, if the file originates on GitHub, you can copy the download from the release and use `spack create -N hpcc_pkgs https://github.com/EXAMPLE/PKG/archive/refs/tags/v9.9.9.tar.gz`. Including `-N hpcc_pkgs` is important to make sure that it's created under the hpcc_pkgs namespace, rather than builtin or hpcc_updates. This command should also grab multiple releases. I typically just grab the latest version though.
 
 ### Good Example Packages
 
-**From Source (CMake)**: # TODO (QT?)
-**From Source (Makefile)**: # TODO
-**Python Package**: # TODO
-**Binary Download**: # TODO (globusconnectpersonal?)
+**From Source (CMake)**: [Slim (isn't the BEST example...)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/slim/package.py)
+**From Source (Makefile)**: [bwa_mem2](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/bwa_mem2/package.py), [MCScanX](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/mcscanx/package.py)
+**Python Package**: [py_amptk](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/py_amptk/package.py)
+**Binary Download**: [Admixture](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/admixture/package.py), [Aiupred](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/aiupred/package.py), 
 
 
 
