@@ -1,7 +1,12 @@
 # TODOs
-Mention config files
-    concretizer.yaml
-    toolchains.yaml
+- Mention config files
+    - concretizer.yaml
+    - toolchains.yaml
+- Mention commands
+    - spack repo ls
+    - spack location
+    - spack cd
+- Users configuring upstreams
 
 
 # SPACK
@@ -37,32 +42,24 @@ You can see what software will be installed alongside the main package by using 
 More reading on the Spack spec syntax can be found in their documentation:
 https://spack.readthedocs.io/en/latest/spec_syntax.html
 
-If the spec listed is acceptable, then it can be installed using `spack install PACKAGE`. Modifiers can be added to speed up compilation, eg `spack install -p4 -j16 PACKAGE` to install up to 4 packages in parallel, using up to 16 cores per package. Module files should also automatically be generated for newly installed packages. This is thanks to the configuration file at `spack/etc/spack/modules.yaml`.
-
-
-# TODO: Finish below
+If the spec listed is acceptable, then it can be installed using `spack install PACKAGE`. Modifiers can be added to speed up compilation, eg `spack install -p4 -j16 PACKAGE` to install up to 4 packages in parallel, using up to 16 cores per package. Module files will also automatically be generated for newly installed packages. This is thanks to the configuration file at `spack/etc/spack/modules.yaml`.
 
 
 
+## Common Installation Problems
 
-## Installation Problems
-
-#TODO
-- File name too long
-	- Change config:build_stage:: to "/tmp/${user}" for shorter path name
-- Change build_type to Release instead of RelWithDebInfo (eg. llvm throws errors compiling with RelWithDebInfo, probably isnt too important that it's compiled w/ debug though)
-
+### Filename Too Long
+I've encountered issues where the file path has been too long for some tools to handle. In this case, the build directory will likely need to be changed. Within spack's `config.yaml` file, the `config:build_stage::` variable can be changed to "/tmp/${user}" which should allow for a shorter path name. The `/tmp` directory is significantly smaller than scratch, so be sure to revert this change after installing.
 
 ### Compiler Versions
 
-Sometimes when installing packages, compilation problems can arise. The problem I see most often is that the software needs a newer (or older) version of gcc. For example, gcc 15 changes a handful of things so older packages can't be compiled with it. The correct thing would be to submit a update to the Spack packages with a newer version or a patch to allow it to compile. The easier solution would just be to use a different compiler. Using a different version of GCC can be done as follows:
+Sometimes when installing packages, compilation problems can arise. The problem I see most often is that the software needs a newer (or older) version of gcc. For example, gcc 15 changes a handful of things so older packages can't be compiled with it. The correct thing would be to submit a update to the Spack packages with a newer version, patch to allow it to compile, and/or a conflict with the problematic gcc versions(s), though the easier solution would just be to use a different compiler. Using a different version of GCC (eg. 12) can be done as follows:
 
 ```
-#TODO: Confirm this is how different compiler versions are used
-spack install PACKAGENAME %gcc@14.1  # Replace 14.1 with whatever other versions are available
+spack install PACKAGENAME %gcc@12
 ```
 
-If a certain piece of software, but some dependency needs a different version, you can specify multiple different compilers using:
+If a certain piece of software needs a different version than it's dependency, you can specify multiple different compilers using:
 ```
 spack install PKGA %gcc@X.X.X ^PKGB %gcc@Y.Y.Y
 ```
@@ -72,8 +69,39 @@ This just follows the Spack spec syntax, and more information on that can be fou
 
 ### Dependencies
 
-Sometimes you'll need to manually install dependencies
-#TODO
+Sometimes you'll need to manually install dependencies. To get the dependency itself, run a `spack spec` on the software to see what variants/options the dependency is configured with. As an example, we'll use `bamtools`.
+
+```console
+$ spack spec bamtools
+ -   bamtools@2.5.2~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-rocky8-x86_64_v2 %cxx=gcc@8.5.0
+ -       ^cmake@3.31.8~doc+ncurses+ownlibs~qtgui build_system=generic build_type=RelWithDebInfo arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -           ^curl@8.15.0~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs:=shared,static tls:=openssl arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -               ^nghttp2@1.65.0 build_system=autotools arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -                   ^diffutils@3.12 build_system=autotools arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -                       ^libiconv@1.18 build_system=autotools libs:=shared,static arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -               ^openssl@3.4.1~docs+shared build_system=generic certs=mozilla arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -                   ^ca-certificates-mozilla@2025-08-12 build_system=generic arch=linux-rocky8-x86_64_v2 
+ -               ^perl@5.42.0+cpanm+opcode+open+shared+threads build_system=generic arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -                   ^berkeley-db@18.1.40+cxx~docs+stl build_system=autotools patches:=26090f4,b231fcc arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -                   ^bzip2@1.0.8~debug~pic+shared build_system=generic arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -                   ^gdbm@1.25 build_system=autotools arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -                       ^readline@8.3 build_system=autotools patches:=21f0a03 arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -               ^pkgconf@2.5.1 build_system=autotools arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -           ^ncurses@6.5-20250705~symlinks+termlib abi=none build_system=autotools patches:=7a351bc arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+ -       ^compiler-wrapper@1.0 build_system=generic arch=linux-rocky8-x86_64_v2 
+[e]      ^gcc@8.5.0~binutils+bootstrap~graphite~nvptx~piclibs~profiled~strip build_system=autotools build_type=Release languages:='c,c++,fortran' patches:=98a9c96,d4919d6 arch=linux-rocky8-x86_64_v2 
+ -       ^gcc-runtime@8.5.0 build_system=generic arch=linux-rocky8-x86_64_v2 
+[e]      ^glibc@2.28 build_system=autotools arch=linux-rocky8-x86_64_v2 
+ -       ^gmake@4.4.1~guile build_system=generic arch=linux-rocky8-x86_64_v2 %c=gcc@8.5.0
+ -       ^jsoncpp@1.9.6~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-rocky8-x86_64_v2 %cxx=gcc@8.5.0
+ -       ^zlib-ng@2.2.4+compat+new_strategies+opt+pic+shared build_system=autotools arch=linux-rocky8-x86_64_v2 %c,cxx=gcc@8.5.0
+```
+
+With this, we can see that gcc and glibc are provided externally `[e]`, and everything else is uninstalled. Lets pretend that `jsoncpp` had problems installing. We can see that it's full spec is `jsoncpp@1.9.6~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-rocky8-x86_64_v2 %cxx=gcc@8.5.0`, so we can run `spack install jsoncpp@1.9.6~ipo build_system=cmake build_type=RelWithDebInfo generator=make arch=linux-rocky8-x86_64_v2 %cxx=gcc@8.5.0`. If we find that it cant install using gcc@8, but *can* install using gcc 12, we can attempt to reinstall bamtools using `spack spec bamtools ^jsoncpp %gcc@12`
+
+
+
+# TODO: Finish below
 
 
 ## Package Creation
