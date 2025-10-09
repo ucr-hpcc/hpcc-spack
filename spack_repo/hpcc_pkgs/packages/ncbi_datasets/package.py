@@ -18,7 +18,7 @@ class NcbiDatasets(Package):
 
     version(
         "latest",
-        sha256="200c6ef8df827768904dba7b4f4694c8b598599612a385cd2dce67ae2839ed0f",
+        sha256="2c24dcf224d7a210fe5490c7468fd38ae597ef95c2d478d61aed3332e85eb17a",
         expand=False,
         url="https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/datasets",
     )
@@ -28,7 +28,7 @@ class NcbiDatasets(Package):
         placement="dataformat",
         expand=False,
         url="https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/dataformat",
-        sha256="ffdc54e8dcf5542c5369b29ecfe71e8153ab74034eb3f1522fcc42eb4629447b",
+        sha256="25be373cb3adff36efbfc76dcd828dd976eaeb006de88324a062ba4f8a6f9830",
     )
 
     def install(self, spec, prefix):
