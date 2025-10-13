@@ -20,6 +20,7 @@ class Mcscanx(MakefilePackage):
     version("1.0.0", sha256="f8d02cf76251a6a69ccd0c2b92af97f5aafa4d1ac7e907fbbacc480d2d4f238f")
 
     depends_on("cxx", type="build")
+    depends_on("java")
 
     def install(self, spec, prefix):
         mkdirp(prefix.bin)
