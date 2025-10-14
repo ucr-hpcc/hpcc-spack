@@ -25,9 +25,14 @@ class Phyml(AutotoolsPackage):
     depends_on("autoconf", type="build")
     depends_on("automake", type="build")
 
-    depends_on("mpi", when="+mpi")
+    # MPI is broken for this package.
+    #depends_on("mpi", when="+mpi", type=("build", "link", "run"))
 
-    variant("mpi", default=True, description="Enable MPI build")
+    #variant("mpi", default=True, description="Enable MPI build")
+
+    #def setup_build_environment(self, env):
+    #    if self.spec.satisfies("+mpi"):
+    #        env["CC"] = self.spec["mpi"].mpicc 
 
     def autoreconf(self, spec, prefix):
         autoreconf("--install", "--verbose", "--force")
@@ -39,7 +44,7 @@ class Phyml(AutotoolsPackage):
             "--enable-phyml",
         ]
 
-        if self.spec.satisfies("+mpi"):
-            args.append("--enable-phyml-mpi")
+        #if self.spec.satisfies("+mpi"):
+        #    args.append("--enable-phyml-mpi")
 
         return args
