@@ -38,7 +38,7 @@ class Calculix(MakefilePackage):
     conflicts("%gcc@14:")
 
     variant("precice", default=False, description="Build with preCICE adapter", when="@2.20")
-    depends_on("precice", when="+precice")
+    depends_on("precice@3:", when="+precice")
     depends_on("mpi", when="+precice")
     depends_on("yaml-cpp", when="+precice")
     depends_on("cxx", when="+precice", type="build")
