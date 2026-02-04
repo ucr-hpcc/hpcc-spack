@@ -11,7 +11,7 @@ class Colony(Package):
     """FIXME: Put a proper description of your package here."""
 
     # FIXME: Add a proper url for your package's homepage here.
-    homepage = "https://www.example.com"
+    homepage = "https://www.zsl.org/about-zsl/resources/software/colony/thank-you"
     url = "file://{0}/colony2_Lnx_15_07_2025.zip".format(os.getcwd())
     manual_download = True
 
