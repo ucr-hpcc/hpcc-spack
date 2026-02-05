@@ -136,10 +136,20 @@ Creation of the initial `package.py` file can be made using the `spack create` c
 
 ### Good Example Packages
 
-**From Source (CMake)**: [Slim (isn't the BEST example...)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/slim/package.py)
-**From Source (Makefile)**: [bwa_mem2](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/bwa_mem2/package.py), [MCScanX](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/mcscanx/package.py)
-**Python Package**: [py_amptk](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/py_amptk/package.py)
-**Binary Download**: [Admixture](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/admixture/package.py), [Aiupred](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/aiupred/package.py), 
+- **From Source (CMake)**
+    - [Slim (isn't the BEST example...)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/slim/package.py)
+    - [anchorwave (AVX, SSE)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/anchorwave/package.py)
+- **From Source (Makefile)**
+    - [bwa_mem2](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/bwa_mem2/package.py)
+    - [MCScanX](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/mcscanx/package.py)
+    - [CalculiX (Good complicated install)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/calculix/package.py)
+- **From Source (Non-standard)**
+    - [famsa (Custom compilation)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/famsa/package.py)
+- **Python Package**
+    - [py_amptk](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/py_amptk/package.py)
+- **Binary Download**
+    - [Admixture](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/admixture/package.py)
+    - [Aiupred](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/aiupred/package.py), 
 
 
 
