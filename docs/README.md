@@ -137,7 +137,7 @@ Creation of the initial `package.py` file can be made using the `spack create` c
 ### Good Example Packages
 
 - **From Source (CMake)**
-    - [Slim (isn't the BEST example...)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/slim/package.py)
+    - [OpenModelica (lots of dependencies, cmake args)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/openmodelica/package.py)
     - [anchorwave (AVX, SSE)](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/anchorwave/package.py)
 - **From Source (Makefile)**
     - [bwa_mem2](https://github.com/ucr-hpcc/hpcc-spack/blob/develop/spack_repo/hpcc_pkgs/packages/bwa_mem2/package.py)
