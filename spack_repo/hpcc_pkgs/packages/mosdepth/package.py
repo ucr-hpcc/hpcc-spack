@@ -25,7 +25,7 @@ class Mosdepth(Package):
 
     def install(self, spec, prefix):
         nimble = Executable("nimble")
-        nimble("install", "-y")
+        nimble("build", "-y")
 
         mkdirp(prefix.bin)
         install(join_path(self.stage.source_path, "mosdepth"), prefix.bin)
