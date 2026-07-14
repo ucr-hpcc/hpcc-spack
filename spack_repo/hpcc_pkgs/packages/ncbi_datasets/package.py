@@ -11,14 +11,11 @@ class NcbiDatasets(Package):
 
     homepage = "https://www.ncbi.nlm.nih.gov/datasets/"
 
-    # FIXME: Add the SPDX identifier of the project's license below.
-    # See https://spdx.org/licenses/ for a list. Upon manually verifying
-    # the license, set checked_by to your Github username.
-    license("UNKNOWN", checked_by="github_user1")
-
+    # NOTE: NCBI does not post past versions. If downloads are failing, redownload
+    # the package and update the version and sha256sum
     version(
-        "latest",
-        sha256="2c24dcf224d7a210fe5490c7468fd38ae597ef95c2d478d61aed3332e85eb17a",
+        "18.33.1",
+        sha256="8459ef1e87433f7b1198f5703c8cc10b55f1904cd448cf7e996c0892b141cd1f",
         expand=False,
         url="https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/datasets",
     )
@@ -28,7 +25,7 @@ class NcbiDatasets(Package):
         placement="dataformat",
         expand=False,
         url="https://ftp.ncbi.nlm.nih.gov/pub/datasets/command-line/v2/linux-amd64/dataformat",
-        sha256="25be373cb3adff36efbfc76dcd828dd976eaeb006de88324a062ba4f8a6f9830",
+        sha256="8450cf7cbdb0ed7fece567405732cd1ff838b5352faa58abbccdeff56e1ff0e8",
     )
 
     def install(self, spec, prefix):
