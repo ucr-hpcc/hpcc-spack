@@ -13,9 +13,9 @@ class Multiwfn(MakefilePackage):
     analysis, which is a key ingredient of quantum chemistry."""
 
     homepage = "http://sobereva.com/multiwfn/"
-    url = "http://sobereva.com/multiwfn/misc/Multiwfn_2026.6.2_src_Linux.zip"
+    url = "http://sobereva.com/multiwfn/misc/Multiwfn_2026.7.11_bin_Linux.zip"
 
-    version("2026.6.2", sha256="62f8436101267253d7e63e3034af4bd2e38b198c2d99428566206418cdab5424")
+    version("2026.7.11", sha256="f5f68948e19ace9d74ce59dd130984eba1bf7ad0a9f1032d235128df947ca6a2")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
