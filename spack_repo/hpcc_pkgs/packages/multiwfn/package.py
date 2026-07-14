@@ -15,7 +15,7 @@ class Multiwfn(MakefilePackage):
     homepage = "http://sobereva.com/multiwfn/"
     url = "http://sobereva.com/multiwfn/misc/Multiwfn_2026.7.11_src_Linux.zip"
 
-    version("2026.7.11", sha256="f5f68948e19ace9d74ce59dd130984eba1bf7ad0a9f1032d235128df947ca6a2")
+    version("2026.7.11", sha256="d1249521e8ccf6c621697f31946561ea962620022b6a20a50a092ef9305c0aa5")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
