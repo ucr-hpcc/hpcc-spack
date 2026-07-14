@@ -13,7 +13,7 @@ class Multiwfn(MakefilePackage):
     analysis, which is a key ingredient of quantum chemistry."""
 
     homepage = "http://sobereva.com/multiwfn/"
-    url = "http://sobereva.com/multiwfn/misc/Multiwfn_2026.7.11_bin_Linux.zip"
+    url = "http://sobereva.com/multiwfn/misc/Multiwfn_2026.7.11_src_Linux.zip"
 
     version("2026.7.11", sha256="f5f68948e19ace9d74ce59dd130984eba1bf7ad0a9f1032d235128df947ca6a2")
 
