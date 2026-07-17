@@ -16,6 +16,7 @@ class Kronatools(Package):
     version("2.8.1", sha256="d57eb342427c179bc0431b8a6088313f54326e233762b5652e8a90ce3ca4027d")
 
     depends_on("perl")
+    depends_on("gmake", type="build")
 
     phases = ("edit", "install")
 
