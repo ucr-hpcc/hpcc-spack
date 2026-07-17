@@ -17,8 +17,13 @@ class Modkit(CargoPackage):
     version("0.6.1", sha256="31e280b0c7bd87291648f642324052a77fd88d0e25464e7e43b415b01101c9e1")
 
     depends_on("gmake", type="build")
+    depends_on("llvm+clang", type="build")
 
     def build(self, spec, prefix):
+        files = ["modkit-core/Cargo.toml", "modkit/Cargo.toml", "ochm/Cargo.toml", "safe-record/Cargo.toml"]
+        ff = FileFilter(*files)
+        ff.filter('rust-htslib = "0.46.0"', 'rust-htslib = "0.47.1"')
+
         cargo = which("cargo")
         cargo("install", "--root", "out", "--path", "modkit")
 
