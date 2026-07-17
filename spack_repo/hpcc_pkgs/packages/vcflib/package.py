@@ -17,7 +17,7 @@ class Vcflib(CMakePackage):
     version("1.0.15", sha256="178e8c27fffc5324ac73f1c4b35f407184271b57f82aedc2efb9703df6ee3d49")
     version("1.0.14", sha256="27ba26a3c48ba3911e760de1c5633d46b57e1e8dce9ad41e8cb3de299d2d6053")
 
-    conflicts("gcc@:11")
+    conflicts("%gcc@:11")
 
     depends_on("c", type="build")
     depends_on("cxx", type="build")
