@@ -34,6 +34,18 @@ class R8s(MakefilePackage):
     depends_on("c", type="build")
     depends_on("fortran", type="build")
 
+    def flag_handler(self, name, flags):
+        if name == "cflags":
+            # GCC 10+ defaults to -fno-common; legacy tentative
+            # definitions in the r8s C sources need -fcommon.
+            flags.append("-fcommon")
+        elif name == "fflags":
+            # gfortran 10+ makes argument type/rank mismatches in
+            # tn.f (Nash truncated-Newton) hard errors by default.
+            flags.append("-fallow-argument-mismatch")
+            flags.append("-std=legacy")
+        return (flags, None, None)
+
     def install(self, spec, prefix):
         mkdirp(prefix.bin)
         install(join_path(self.build_directory, "r8s"), join_path(prefix.bin, "r8s"))
