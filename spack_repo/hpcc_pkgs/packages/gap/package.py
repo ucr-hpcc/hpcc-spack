@@ -14,6 +14,7 @@ class Gap(AutotoolsPackage):
     homepage = "https://www.example.com"
     url = "https://github.com/gap-system/gap/releases/download/v4.15.1/gap-4.15.1.tar.gz"
 
+    version("4.16.0", sha256="aaa296b32a5d7bf25fd80f241d23ec1f58b74e991ae730fafe40e54eb3af6e7e")
     version("4.15.1", sha256="6049d53e99b12e25c2d848db21ac4a06380a46fe4c4157243d556fe06930042c")
 
     depends_on("c", type="build")
