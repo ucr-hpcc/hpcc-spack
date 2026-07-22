@@ -19,7 +19,13 @@ class Table2asn(Package):
     # the license, set checked_by to your Github username.
     license("UNKNOWN", checked_by="github_user1")
 
-    version("2025-03-03", url="https://ftp.ncbi.nlm.nih.gov/asn1-converters/by_program/table2asn/linux64.table2asn.gz", sha256="ff9fedb26eb4e955d4748ef943f371632999f85fc56efff2722fa0728d101bea")
+    # Package doesn't have historical releases.
+    # Update the "version" when a new version is released it's updated and update the sha256sum
+    version(
+        "1.29.324",
+        url="https://ftp.ncbi.nlm.nih.gov/asn1-converters/by_program/table2asn/linux64.table2asn.gz",
+        sha256="785bed9880856b208ed84d9765ca094b7c7d12d2225781c2a1854b650d3984bf",
+    )
 
     # FIXME: Add dependencies if required.
     # depends_on("foo")
