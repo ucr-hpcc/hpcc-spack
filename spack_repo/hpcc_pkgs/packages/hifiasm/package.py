@@ -25,6 +25,9 @@ class Hifiasm(MakefilePackage):
     depends_on("c", type="build")
     depends_on("cxx", type="build")
 
+    def patch(self):
+        filter_file(r"__ASSEMBLY__", "__ASSEMBLY_H__", "Assembly.h")
+
     def install(self, spec, prefix):
         mkdirp(prefix.bin)
         install(join_path(self.build_directory, "hifiasm"), prefix.bin)
