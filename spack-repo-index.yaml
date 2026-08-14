@@ -1,4 +1,3 @@
 repo_index:
   paths:
-  - spack_repo/hpcc_updates
   - spack_repo/hpcc_pkgs
