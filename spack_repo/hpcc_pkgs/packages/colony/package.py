@@ -12,7 +12,7 @@ class Colony(Package):
 
     # FIXME: Add a proper url for your package's homepage here.
     homepage = "https://www.zsl.org/about-zsl/resources/software/colony/thank-you"
-    url = "file://{0}/colony2_Lnx_15_07_2025.zip".format(os.getcwd())
+    url = "file://{0}/colony2_Lnx_2.0.7.2.zip".format(os.getcwd())
     manual_download = True
 
     version("2.0.7.2", sha256="e40e1cf06e0f27bc0160d5badc8c65a574f1b095c3f6eb713d13103fbe083a8d")
