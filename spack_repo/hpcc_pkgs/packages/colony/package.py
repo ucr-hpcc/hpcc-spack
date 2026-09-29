@@ -15,6 +15,8 @@ class Colony(Package):
     url = "file://{0}/colony2_Lnx_2.0.7.2.zip".format(os.getcwd())
     manual_download = True
 
+    # Do not use the date version from the download (eg. colony2_Lnx_15_07_2025.zip).
+    # Extract it manually and get the "real" version from it
     version("2.0.7.2", sha256="e40e1cf06e0f27bc0160d5badc8c65a574f1b095c3f6eb713d13103fbe083a8d")
 
     depends_on("intel-oneapi-compilers", type="run")
